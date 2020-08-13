@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  vault:
+    image: vault
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - "8200:8200"
