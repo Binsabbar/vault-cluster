@@ -5,4 +5,4 @@ services:
     volumes:
       - ./config/:/vault/config
       - ./data:/data/vault/
-    command: sh -c "vault server -config /vault/config/cluster-1.tf"
+    command: sh -c "vault server -config /vault/config"
