@@ -4,3 +4,12 @@ Suggested approach is to use `etcd` as cluster, and use it as backend storage fo
 
 Terraform is used to mainly manage policies and access to Vault itself. It is not used to set and revoke keys. Storing sensitive keys in Terraform is
 highly discouraged.
+
+
+Todos:
+[ ] Enable TLS
+[ ] Use Single dockersied etcd storage
+[ ] Enable TLS for etcd
+[ ] Create etcd cluster
+[ ] Create vault cluster
+[ ] Deploy to Oracle Cloud in Private Subnet with LB
