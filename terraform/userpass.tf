@@ -9,16 +9,16 @@ resource "vault_auth_backend" "userpass" {
 // Start: Link userpass to an enttiy
 resource "vault_identity_entity" "admin_entity" {
   for_each = toset(local.admins_usernames)
-  name      = each.key
+  name     = each.key
 }
 
 resource "vault_identity_entity_alias" "admins_entity_alias" {
   for_each = toset(local.admins_usernames)
 
-  name            = each.key
-  mount_accessor  = vault_auth_backend.userpass.accessor
+  name           = each.key
+  mount_accessor = vault_auth_backend.userpass.accessor
 
-  canonical_id    = vault_identity_entity.admin_entity[each.key].id
+  canonical_id = vault_identity_entity.admin_entity[each.key].id
 }
 // End: Link userpass to an enttiy
 
