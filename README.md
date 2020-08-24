@@ -7,9 +7,10 @@ highly discouraged.
 
 
 Todos:
-[ ] Enable TLS
-[ ] Use Single dockersied etcd storage
-[ ] Enable TLS for etcd
-[ ] Create etcd cluster
-[ ] Create vault cluster
-[ ] Deploy to Oracle Cloud in Private Subnet with LB
+
+- [ ] Enable TLS
+- [ ] Use Single dockersied etcd storage
+- [ ] Enable TLS for etcd
+- [ ] Create etcd cluster
+- [ ] Create vault cluster
+- [ ] Deploy to Oracle Cloud in Private Subnet with LB
