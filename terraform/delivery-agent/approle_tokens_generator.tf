@@ -21,3 +21,12 @@ resource "vault_approle_auth_backend_login" "login" {
   role_id   = each.value.role_id
   secret_id = each.value.secret_id
 }
+
+output "tokens" {
+  value = {
+      for k, v in vault_approle_auth_backend_login.login:
+        k => {
+          token = v.client_token
+        }
+  }
+}
