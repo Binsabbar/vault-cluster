@@ -8,7 +8,7 @@ highly discouraged.
 
 Todos:
 
-- [ ] Enable TLS
+- [X] Enable TLS
 - [ ] Use Single dockersied etcd storage
 - [ ] Enable TLS for etcd
 - [ ] Create etcd cluster
