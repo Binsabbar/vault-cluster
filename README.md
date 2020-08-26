@@ -13,4 +13,5 @@ Todos:
 - [ ] Enable TLS for etcd
 - [ ] Create etcd cluster
 - [ ] Create vault cluster
+- [ ] Create policies for vault users
 - [ ] Deploy to Oracle Cloud in Private Subnet with LB
