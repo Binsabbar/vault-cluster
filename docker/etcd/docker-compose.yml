@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  etcd-1:
+    image: quay.io/coreos/etcd:latest
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./data:/etcd-data
+    expose:
+      - 2379
+      - 2380
+    environment: 
+      - NODE1=192.168.100.78
+      - VIRTUAL_HOST=etcd-1.nginx.internal
+      - VIRTUAL_PORT=2379
+    entrypoint: /usr/local/bin/etcd
+    command:
+      - --data-dir=/etcd-data
+      - --name=node1
+      - --initial-advertise-peer-urls=http://0.0.0.0:2380
+      - --listen-peer-urls=http://0.0.0.0:2380
+      - --advertise-client-urls=http://0.0.0.0:2379
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --initial-cluster=node1=http://0.0.0.0:2380
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
