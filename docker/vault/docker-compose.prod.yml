@@ -1,8 +1,10 @@
 version: "3.8"
 
 services:
-  vault:
+  vault-1:
     volumes:
-      - ./config/:/vault/config
+      - ./config/cluster-1.hcl:/vault/config/cluster-1.hcl
+      - ./certs/vault-node-1-cert.pem:/certs/vault-node-1-cert.pem
+      - ./certs/vault-node-1-key.pem:/certs/vault-node-1-key.pem
       - ./data:/data/vault/
     command: sh -c "vault server -config /vault/config"
