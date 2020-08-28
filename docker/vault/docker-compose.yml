@@ -16,6 +16,8 @@ services:
       - ./certs/vault-node-1-cert.pem:/certs/vault-node-1-cert.pem
       - ./certs/vault-node-1-key.pem:/certs/vault-node-1-key.pem
       - ./certs/etcd-ca-cert.pem:/certs/etcd-ca-cert.pem
+      - ./certs/vault-client-key.pem:/certs/vault-client-key.pem
+      - ./certs/vault-client-cert.pem:/certs/vault-client-cert.pem
     command: sh -c "vault server -config /vault/config"
 
 networks:
