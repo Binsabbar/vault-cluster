@@ -11,6 +11,12 @@ locals {
       dns_names   = ["etcd-2", "etcd.internal"]
       common_name = "etcd-2"
     }
+
+    "etcd-node-3" = {
+      uris        = ["etcd-3", "etcd.internal"]
+      dns_names   = ["etcd-3", "etcd.internal"]
+      common_name = "etcd-3"
+    }
   }
 }
 

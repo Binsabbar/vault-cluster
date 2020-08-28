@@ -12,3 +12,5 @@
 [entryPoints]
   [entryPoints.etcd]
     address = ":2379"
+  [entryPoints.etcd-nodes]
+    address = ":2380"

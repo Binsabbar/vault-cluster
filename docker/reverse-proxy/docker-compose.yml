@@ -6,6 +6,7 @@ services:
     ports:
       - "8080:8080"
       - "2379:2379"
+      - "2380:2380"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/etc/traefik/traefik.toml
