@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  etcd-2:
+    image: quay.io/coreos/etcd:latest
+    labels:
+      - "traefik.tcp.routers.etcd-2.rule=HostSNI(`etcd.internal`) || HostSNI(`etcd-2.internal`)"
+      - "traefik.tcp.routers.etcd-2.entrypoints=etcd"
+      - "traefik.tcp.services.etcd-2.loadbalancer.server.port=2379"
+      - "traefik.tcp.routers.etcd-2.tls.passthrough=true"
+      - "traefik.tcp.routers.etcd-2.tls=true"
+    volumes:
+      - ./data-2:/etcd-data
+      - ./certs/etcd-node-2-cert.pem:/certs/etcd-node-cert.pem
+      - ./certs/etcd-node-2-key.pem:/certs/etcd-node-key.pem
+      - ./certs/etcd-ca-cert.pem:/certs/etcd-ca-cert.pem
+    expose:
+      - 2379
+      - 2380
+    entrypoint: /usr/local/bin/etcd
+    command:
+      - --data-dir=/etcd-data
+      - --name=node2
+      - --initial-cluster-token=etcd-cluster-1
+      - --initial-cluster-state=new
+      - --initial-cluster=node1=http://etcd-1:2380,node2=http://etcd-2:2380
+      - --initial-advertise-peer-urls=http://etcd-2:2380
+      - --advertise-client-urls=http://etcd.internal:2379
+      - --listen-peer-urls=http://0.0.0.0:2380
+      - --listen-client-urls=https://0.0.0.0:2379
+      - --cert-file=/certs/etcd-node-cert.pem
+      - --key-file=/certs/etcd-node-key.pem
+      - --trusted-ca-file=/certs/etcd-ca-cert.pem
+
+networks:
+  default:
+    external:
+      name: reverse-proxy

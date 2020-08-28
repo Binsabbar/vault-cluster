@@ -4,11 +4,11 @@ services:
   etcd-1:
     image: quay.io/coreos/etcd:latest
     labels:
-      - "traefik.tcp.routers.etcd.rule=HostSNI(`etcd.internal`)"
-      - "traefik.tcp.routers.etcd.entrypoints=etcd"
-      - "traefik.tcp.services.etcd.loadbalancer.server.port=2379"
-      - "traefik.tcp.routers.etcd.tls.passthrough=true"
-      - "traefik.tcp.routers.etcd.tls=true"
+      - "traefik.tcp.routers.etcd-1.rule=HostSNI(`etcd.internal`) || HostSNI(`etcd-1.internal`)"
+      - "traefik.tcp.routers.etcd-1.entrypoints=etcd"
+      - "traefik.tcp.services.etcd-1.loadbalancer.server.port=2379"
+      - "traefik.tcp.routers.etcd-1.tls.passthrough=true"
+      - "traefik.tcp.routers.etcd-1.tls=true"
     volumes:
       - ./data:/etcd-data
       - ./certs/etcd-node-1-cert.pem:/certs/etcd-node-1-cert.pem
@@ -23,7 +23,9 @@ services:
     command:
       - --data-dir=/etcd-data
       - --name=node1
-      - --initial-cluster=node1=http://etcd-1:2380
+      - --initial-cluster-token=etcd-cluster-1
+      - --initial-cluster-state=new
+      - --initial-cluster=node1=http://etcd-1:2380,node2=http://etcd-2:2380
       - --initial-advertise-peer-urls=http://etcd-1:2380
       - --advertise-client-urls=http://etcd.internal:2379
       - --listen-peer-urls=http://0.0.0.0:2380
