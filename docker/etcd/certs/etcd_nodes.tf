@@ -17,6 +17,12 @@ locals {
       dns_names   = ["etcd-3.internal", "etcd.internal"]
       common_name = "etcd-3.internal"
     }
+
+    "vault-client" = {
+      uris        = ["vault.internal", "vault-1.internal", "vault-2.internal", "vault-3.internal"]
+      dns_names   = ["vault.internal", "vault-1.internal", "vault-2.internal", "vault-3.internal"]
+      common_name = "vault.internal"
+    }
   }
 }
 

@@ -16,5 +16,7 @@ storage "etcd" {
   address  = "https://etcd.internal:2379"
   etcd_api = "v3"
   tls_ca_file = "/certs/etcd-ca-cert.pem"
+  tls_cert_file = "/certs/vault-client-cert.pem"
+  tls_key_file = "/certs/vault-client-key.pem"
   ha_enabled = false
 }
