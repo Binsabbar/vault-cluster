@@ -1,0 +1,39 @@
+tcp:
+  routers:
+    etcd-1:
+      entryPoints:
+        - etcd
+      service: node-1
+      rule: HostSNI(`etcd-1.internal`)
+      tls:
+        passthrough: true
+    etcd-2:
+      entryPoints:
+        - etcd
+      service: node-2
+      rule: HostSNI(`etcd-2.internal`)
+      tls:
+        passthrough: true
+    vault-1:
+      entryPoints:
+        - vault
+      service: node-1
+      rule: HostSNI(`vault-1.internal`)
+      tls:
+        passthrough: true
+    vault-2:
+      entryPoints:
+        - vault
+      service: node-2
+      rule: HostSNI(`vault-2.internal`)
+      tls:
+        passthrough: true
+  services:
+    node-1:
+      loadBalancer:
+        servers:
+        - address: xxx.xxx.xxx.xxx # the IP of the node
+    node-2:
+      loadBalancer:
+        servers:
+        - address: xxx.xxx.xxx.xxx # the IP of the node
