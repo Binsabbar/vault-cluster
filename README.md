@@ -9,8 +9,8 @@ highly discouraged.
 Todos:
 
 - [X] Enable TLS
-- [ ] Use Single dockersied etcd storage
-- [ ] Enable TLS for etcd
+- [X] Use Single dockersied etcd storage
+- [X] Enable TLS for etcd
 - [ ] Create etcd cluster
 - [ ] Create vault cluster
 - [ ] Create policies for vault users
