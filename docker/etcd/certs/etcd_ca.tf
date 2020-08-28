@@ -40,6 +40,8 @@ resource "tls_locally_signed_cert" "etcd_node_cert" {
     "key_encipherment",
     "digital_signature",
     "server_auth",
+    "client_auth",
+    "signing"
   ]
 }
 
@@ -58,7 +60,7 @@ resource "local_file" "etcd_ca_cert" {
 resource "local_file" "etcd_node_cert" {
   for_each = local.etcd_nodes
 
-  content         = "${tls_locally_signed_cert.etcd_node_cert[each.key].cert_pem}${tls_self_signed_cert.etcd_ca_cert.cert_pem}"
+  content         = "${tls_locally_signed_cert.etcd_node_cert[each.key].cert_pem}"
   filename        = "${path.module}/${each.key}-cert.pem"
   file_permission = "0600"
 }

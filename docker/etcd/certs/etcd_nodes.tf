@@ -1,21 +1,21 @@
 locals {
   etcd_nodes = {
     "etcd-node-1" = {
-      uris        = ["etcd-1", "etcd.internal"]
-      dns_names   = ["etcd-1", "etcd.internal"]
-      common_name = "etcd-1"
+      uris        = ["etcd-1.internal", "etcd.internal"]
+      dns_names   = ["etcd-1.internal", "etcd.internal"]
+      common_name = "etcd-1.internal"
     }
 
     "etcd-node-2" = {
-      uris        = ["etcd-2", "etcd.internal"]
-      dns_names   = ["etcd-2", "etcd.internal"]
-      common_name = "etcd-2"
+      uris        = ["etcd-2.internal", "etcd.internal"]
+      dns_names   = ["etcd-2.internal", "etcd.internal"]
+      common_name = "etcd-2.internal"
     }
 
     "etcd-node-3" = {
-      uris        = ["etcd-3", "etcd.internal"]
-      dns_names   = ["etcd-3", "etcd.internal"]
-      common_name = "etcd-3"
+      uris        = ["etcd-3.internal", "etcd.internal"]
+      dns_names   = ["etcd-3.internal", "etcd.internal"]
+      common_name = "etcd-3.internal"
     }
   }
 }
