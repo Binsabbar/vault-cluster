@@ -3,7 +3,22 @@ version: "3.8"
 services:
   vault-1:
     image: vault
+    labels:
+      - traefik.enable=true
     cap_add:
       - IPC_LOCK
+    external_links: 
+      - traefik:etcd.internal
     ports:
       - "8200:8200"
+    volumes:
+      - ./config/cluster-1.hcl:/vault/config/cluster-1.hcl
+      - ./certs/vault-node-1-cert.pem:/certs/vault-node-1-cert.pem
+      - ./certs/vault-node-1-key.pem:/certs/vault-node-1-key.pem
+      - ./certs/etcd-ca-cert.pem:/certs/etcd-ca-cert.pem
+    command: sh -c "vault server -config /vault/config"
+
+networks:
+  default:
+    external:
+      name: reverse-proxy

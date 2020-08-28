@@ -12,6 +12,9 @@ listener "tcp" {
 
 api_addr = "http://0.0.0.0:8200"
 
-storage "file" {
-  path = "/data/vault/"
+storage "etcd" {
+  address  = "https://etcd.internal:2379"
+  etcd_api = "v3"
+  tls_ca_file = "/certs/etcd-ca-cert.pem"
+  ha_enabled = false
 }
