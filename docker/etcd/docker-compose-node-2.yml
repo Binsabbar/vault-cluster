@@ -12,12 +12,12 @@ services:
       - "traefik.tcp.routers.etcd.tls.passthrough=true"
       - "traefik.tcp.routers.etcd.tls=true"
       # Node Service
-      - "traefik.http.routers.etcd-node-2.service=etcd-node-2"
-      - "traefik.http.services.etcd-node-2.loadbalancer.server.port=2380"
-      - "traefik.http.routers.etcd-node-2.rule=Host(`etcd-2.internal`)"
-      - "traefik.http.routers.etcd-node-2.entrypoints=etcd-nodes"
-      # - "traefik.tcp.routers.etcd-node-2.tls.passthrough=true"
-      # - "traefik.tcp.routers.etcd-node-2.tls=true"
+      - "traefik.tcp.routers.etcd-node-2.service=etcd-node-2"
+      - "traefik.tcp.services.etcd-node-2.loadbalancer.server.port=2380"
+      - "traefik.tcp.routers.etcd-node-2.rule=HostSNI(`etcd-2.internal`)"
+      - "traefik.tcp.routers.etcd-node-2.entrypoints=etcd-nodes"
+      - "traefik.tcp.routers.etcd-node-2.tls.passthrough=true"
+      - "traefik.tcp.routers.etcd-node-2.tls=true"
     volumes:
       - etcd-data-2:/etcd-data
       - ./certs/etcd-node-2-cert.pem:/certs/etcd-node-cert.pem
@@ -33,7 +33,7 @@ services:
     environment: 
       NODE_NAME: node2
       NODE_URL: etcd-2.internal
-      CLUSTER_NODES: "node1=http://etcd-1.internal:2380,node2=http://etcd-2.internal:2380,node3=http://etcd-3.internal:2380"
+      CLUSTER_NODES: "node1=https://etcd-1.internal:2380,node2=https://etcd-2.internal:2380,node3=https://etcd-3.internal:2380"
       INITIAL_CLUSTER_TOKEN: etcd-vault-cluster
     entrypoint: sh 
     command:
@@ -45,14 +45,18 @@ services:
         --initial-cluster-token=$$INITIAL_CLUSTER_TOKEN
         --initial-cluster-state=new
         --initial-cluster=$$CLUSTER_NODES
-        --initial-advertise-peer-urls=http://$$NODE_URL:2380
-        --advertise-client-urls=http://etcd.internal:2379
-        --listen-peer-urls=http://0.0.0.0:2380
+        --advertise-client-urls=https://etcd.internal:2379
         --listen-client-urls=https://0.0.0.0:2379
         --cert-file=/certs/etcd-node-cert.pem
         --key-file=/certs/etcd-node-key.pem
         --trusted-ca-file=/certs/etcd-ca-cert.pem
-
+        --initial-advertise-peer-urls=https://$$NODE_URL:2380
+        --listen-peer-urls=https://0.0.0.0:2380
+        --peer-client-cert-auth 
+        --peer-trusted-ca-file=/certs/etcd-ca-cert.pem
+        --peer-cert-file=/certs/etcd-node-cert.pem
+        --peer-key-file=/certs/etcd-node-key.pem
+        
 volumes:
   etcd-data-2:
 
