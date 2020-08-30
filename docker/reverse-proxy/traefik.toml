@@ -4,6 +4,7 @@
   network = "reverse-proxy"
   domain = "internal"
   exposeByDefault = false
+
 [api]
   insecure = true
   dashboard = true
