@@ -14,3 +14,5 @@
     address = ":2379"
   [entryPoints.etcd-nodes]
     address = ":2380"
+  [entryPoints.vault]
+    address = ":8200"
