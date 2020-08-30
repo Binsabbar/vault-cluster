@@ -1,15 +1,9 @@
 locals {
   vault_nodes = {
     "vault-node-1" = {
-      uris        = ["vault-1"]
-      dns_names   = ["vault-1.localhost"]
-      common_name = "vault-1"
-    }
-
-    "vault-node-2" = {
-      uris        = ["vault-2"]
-      dns_names   = ["vault-2.localhost"]
-      common_name = "vault-2"
+      uris        = ["vault.internal", "vault-1.internal"]
+      dns_names   = ["vault.internal", "vault-1.internal"]
+      common_name = "vault.internal"
     }
   }
 }

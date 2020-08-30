@@ -11,7 +11,7 @@ resource "tls_self_signed_cert" "vault_ca_cert" {
   private_key_pem = tls_private_key.vault_ca_key.private_key_pem
 
   subject {
-    common_name    = "vault.local"
+    common_name    = "vault.internal"
     organization   = "Mo's Inc"
     street_address = []
   }
@@ -40,6 +40,8 @@ resource "tls_locally_signed_cert" "vault_node_cert" {
     "key_encipherment",
     "digital_signature",
     "server_auth",
+    "client_auth",
+    "signing"
   ]
 }
 
