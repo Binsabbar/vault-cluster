@@ -17,6 +17,7 @@ resource "tls_self_signed_cert" "vault_ca_cert" {
   }
 
   validity_period_hours = local.cert_period
+  is_ca_certificate = true
 
   allowed_uses = [
     "digital_signature",
