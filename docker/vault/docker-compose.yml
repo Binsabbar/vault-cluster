@@ -4,15 +4,23 @@ services:
   vault-1:
     image: vault
     labels:
-      - traefik.enable=true
+      # UI Access + API
+      - "traefik.tcp.routers.vault.service=vault"
+      - "traefik.tcp.services.vault.loadbalancer.server.port=8200"
+      - "traefik.tcp.routers.vault.rule=HostSNI(`vault.internal`)"
+      - "traefik.tcp.routers.vault.entrypoints=vault"
+      - "traefik.tcp.routers.vault.tls.passthrough=true"
+      - "traefik.tcp.routers.vault.tls=true"
     cap_add:
       - IPC_LOCK
     external_links: 
       - traefik:etcd.internal
-    ports:
-      - "8200:8200"
+    expose:
+      - "8200"
+      - "8201"
     volumes:
-      - ./config/cluster-1.hcl:/vault/config/cluster-1.hcl
+      - ./config/server.hcl:/vault/config/server.hcl
+      - ./certs/vault-ca-cert.pem:/certs/vault-ca-cert.pem
       - ./certs/vault-node-1-cert.pem:/certs/vault-node-1-cert.pem
       - ./certs/vault-node-1-key.pem:/certs/vault-node-1-key.pem
       - ./certs/etcd-ca-cert.pem:/certs/etcd-ca-cert.pem
