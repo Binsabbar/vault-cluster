@@ -3,6 +3,11 @@ version: '3.8'
 services:
   traefik:
     image: traefik:v2.2
+    labels: 
+      - traefik.http.routers.traefik-ui.service=dashboard@internal
+      - traefik.http.routers.traefik-ui.entrypoints=traefik
+      - traefik.http.routers.traefik-ui.rule=Host(`traefik.internal`)
+      - traefik.http.routers.traefik-ui.tls=false
     ports:
       - "8080:8080"
       - "2379:2379"
