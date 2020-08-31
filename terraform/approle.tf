@@ -7,22 +7,22 @@ resource "vault_auth_backend" "approle" {
 }
 
 resource "vault_approle_auth_backend_role" "cicd" {
-  backend        = vault_auth_backend.approle.path
-  role_name      = "cicd"
-  token_policies = ["default", "admin"]
-  secret_id_num_uses  = 1 # How many times can this secretId be used to fetch a token?
+  backend            = vault_auth_backend.approle.path
+  role_name          = "cicd"
+  token_policies     = ["default", "admin"]
+  secret_id_num_uses = 1 # How many times can this secretId be used to fetch a token?
   # secret_id_ttl = 100 # The time to live for the secret id before it is destoryed
 }
 
 resource "vault_approle_auth_backend_role_secret_id" "dev_id" {
-  backend      = vault_auth_backend.approle.path
-  role_name    = vault_approle_auth_backend_role.cicd.role_name
+  backend   = vault_auth_backend.approle.path
+  role_name = vault_approle_auth_backend_role.cicd.role_name
   # wrapping_ttl = 60
 }
 
 resource "vault_approle_auth_backend_role_secret_id" "uat_id" {
-  backend      = vault_auth_backend.approle.path
-  role_name    = vault_approle_auth_backend_role.cicd.role_name
+  backend   = vault_auth_backend.approle.path
+  role_name = vault_approle_auth_backend_role.cicd.role_name
   # wrapping_ttl = 60
 }
 
@@ -33,8 +33,8 @@ output "approles" {
       role_id = vault_approle_auth_backend_role.cicd.role_id
       path    = vault_auth_backend.approle.path
       secret_ids = {
-        dev_id = vault_approle_auth_backend_role_secret_id.dev_id.secret_id 
-        uat_id = vault_approle_auth_backend_role_secret_id.uat_id.secret_id 
+        dev_id = vault_approle_auth_backend_role_secret_id.dev_id.secret_id
+        uat_id = vault_approle_auth_backend_role_secret_id.uat_id.secret_id
       }
     }
   }

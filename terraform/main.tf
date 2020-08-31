@@ -1,4 +1,5 @@
 provider "vault" {
-  address = "http://localhost:8200"
-  token   = var.token
+  address      = var.address
+  token        = var.token
+  ca_cert_file = var.ca_cert_file
 }
