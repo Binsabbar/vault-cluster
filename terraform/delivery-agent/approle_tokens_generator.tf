@@ -24,9 +24,9 @@ resource "vault_approle_auth_backend_login" "login" {
 
 output "tokens" {
   value = {
-      for k, v in vault_approle_auth_backend_login.login:
-        k => {
-          token = v.client_token
-        }
+    for k, v in vault_approle_auth_backend_login.login :
+    k => {
+      token = v.client_token
+    }
   }
 }
