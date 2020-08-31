@@ -4,7 +4,10 @@ provider "vault" {
   ca_cert_file = var.ca_cert_file
 }
 
-
 module "groups" {
   source = "./groups"
+}
+
+module "userpass" {
+  source = "./userpass"
 }
