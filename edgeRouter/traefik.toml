@@ -6,9 +6,11 @@
 [entryPoints]
   [entryPoints.etcd]
     address = ":2379"
+  [entryPoints.etcd-nodes]
+    address = ":2380"
   [entryPoints.vault]
-    address = ":443"
-
+    address = ":8200"
+    
 [providers.file]
     directory = "/etc/traefik"
     watch = true
