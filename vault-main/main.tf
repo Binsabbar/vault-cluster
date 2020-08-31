@@ -11,3 +11,7 @@ module "groups" {
 module "userpass" {
   source = "./userpass"
 }
+
+module "approle" {
+  source = "./approle"
+}
