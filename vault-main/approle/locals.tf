@@ -10,7 +10,11 @@ locals {
       aliases = ["cicd-prod-deployer"]
     }
     "token-generator" = {
-      aliases = ["approle_token_generator"]
+      aliases = ["approle-token-generator"]
+    }
+    
+    "wrapped-secret-id-generator" = {
+      aliases = ["approle-wrapped-secret-id-generator"]
     }
   }
 
