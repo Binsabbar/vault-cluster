@@ -1,8 +1,17 @@
 output "approles" {
   value = {
-    "${vault_approle_auth_backend_role.cicd.role_name}" = {
-      role_id = vault_approle_auth_backend_role.cicd.role_id
-      path    = vault_auth_backend.approle.path
+    for k, v in vault_approle_auth_backend_role.role :
+    "${k}" => {
+      role_id   = v.role_id
+      role_name = k
+      path      = vault_auth_backend.approle.path
     }
+  }
+}
+
+
+output "entities" {
+  value = {
+    for k in keys(local.vault_entities) : k => k
   }
 }
