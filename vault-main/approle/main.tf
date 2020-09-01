@@ -6,22 +6,35 @@ resource "vault_auth_backend" "approle" {
   type = "approle"
 }
 
-resource "vault_approle_auth_backend_role" "cicd" {
+data "vault_auth_backend" "token" {
+  path = "token"
+}
+
+resource "vault_identity_entity" "entity" {
+  for_each = local.vault_entities
+  name     = each.key
+}
+
+resource "vault_approle_auth_backend_role" "role" {
+  for_each           = toset(local.backend_roles)
   backend            = vault_auth_backend.approle.path
-  role_name          = "cicd"
-  token_policies     = ["default", "admin"]
-  
-  # How many times can this secretId be used to fetch a token?
-  secret_id_num_uses = 1 
-  # secret_id_ttl = 100 # The time to live for the secret id before it is destoryed
+  role_name          = each.key
+  token_policies     = []
+  secret_id_num_uses = 0
 }
 
-resource "vault_identity_entity" "cicd_entity" {
-  name     = "cicd"
-}
+resource "vault_identity_entity_alias" "role_entity_alias" {
+  for_each = { for alias in local.flattened_aliases : "${alias.entity}-${alias.role}" => alias }
 
-resource "vault_identity_entity_alias" "cicd_entity_alias" {
-  name           = vault_approle_auth_backend_role.cicd.role_name
+  name           = vault_approle_auth_backend_role.role["${each.value.role}"].role_name
   mount_accessor = vault_auth_backend.approle.accessor
-  canonical_id = vault_identity_entity.cicd_entity.id
+  canonical_id   = vault_identity_entity.entity["${each.value.entity}"].id
+}
+
+resource "vault_identity_entity_alias" "role_entity_alias_token" {
+  for_each = { for alias in local.flattened_aliases : "${alias.entity}-${alias.role}" => alias }
+
+  name           = vault_approle_auth_backend_role.role["${each.value.role}"].role_name
+  mount_accessor = data.vault_auth_backend.token.accessor
+  canonical_id   = vault_identity_entity.entity["${each.value.entity}"].id
 }
