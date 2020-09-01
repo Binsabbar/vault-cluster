@@ -9,5 +9,5 @@ resource "vault_approle_auth_backend_role_secret_id" "secret_id" {
 
   backend   = var.backend_path
   role_name = each.key
-  # wrapping_ttl = 60
+  wrapping_ttl = 60 # in seconds
 }
