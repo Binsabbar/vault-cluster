@@ -14,4 +14,6 @@ module "userpass" {
 
 module "approle" {
   source = "./approle"
+
+  groups = module.groups.groups
 }
