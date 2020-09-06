@@ -17,9 +17,9 @@ resource "vault_identity_entity" "entity" {
 
 // AppRoles Memeberships
 resource "vault_identity_group_member_entity_ids" "members_wrapped_secret_id_generator" {
-  exclusive = true
+  exclusive         = true
   member_entity_ids = [vault_identity_entity.entity["wrapped_secret_id_generator"].id]
-  group_id = var.groups.wrapped_secret_id_generator.id
+  group_id          = var.groups.wrapped_secret_id_generator.id
 }
 
 // Create Roles
