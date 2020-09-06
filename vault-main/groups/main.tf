@@ -4,7 +4,7 @@ resource "vault_identity_group" "admins" {
   policies = [vault_policy.admins.name]
 
   lifecycle {
-    ignore_changes = ["member_entity_ids"]
+    ignore_changes = [member_entity_ids]
   }
 }
 
@@ -14,7 +14,7 @@ resource "vault_identity_group" "default" {
   policies = ["default"]
 
   lifecycle {
-    ignore_changes = ["member_entity_ids"]
+    ignore_changes = [member_entity_ids]
   }
 }
 
@@ -24,7 +24,7 @@ resource "vault_identity_group" "wrapped_secret_id_generator" {
   policies = [vault_policy.wrapped_secret_id_generator.name]
 
   lifecycle {
-    ignore_changes = ["member_entity_ids"]
+    ignore_changes = [member_entity_ids]
   }
 }
 
@@ -34,7 +34,7 @@ resource "vault_identity_group" "development" {
   policies = []
 
   lifecycle {
-    ignore_changes = ["member_entity_ids"]
+    ignore_changes = [member_entity_ids]
   }
 }
 
@@ -43,8 +43,8 @@ resource "vault_identity_group" "uat" {
   type     = "internal"
   policies = []
 
- lifecycle {
-    ignore_changes = ["member_entity_ids"]
+  lifecycle {
+    ignore_changes = [member_entity_ids]
   }
 }
 
@@ -53,7 +53,7 @@ resource "vault_identity_group" "production" {
   type     = "internal"
   policies = []
 
- lifecycle {
-    ignore_changes = ["member_entity_ids"]
+  lifecycle {
+    ignore_changes = [member_entity_ids]
   }
 }

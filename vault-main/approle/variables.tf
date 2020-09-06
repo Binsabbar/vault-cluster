@@ -1,3 +1,3 @@
 variable "groups" {
-  type = map(object({id: string}))
+  type = map(object({ id : string }))
 }
