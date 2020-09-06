@@ -1,20 +1,17 @@
 locals {
   vault_entities = {
-    "cicd-dev" = {
-      aliases = ["cicd-dev-deployer"]
+    "cicd_dev" = {
+      aliases = ["cicd_dev_deployer"]
     }
-    "cicd-uat" = {
-      aliases = ["cicd-uat-deployer"]
+    "cicd_uat" = {
+      aliases = ["cicd_uat_deployer"]
     }
-    "cicd-prod" = {
-      aliases = ["cicd-prod-deployer"]
+    "cicd_prod" = {
+      aliases = ["cicd_prod_deployer"]
     }
-    "token-generator" = {
-      aliases = ["approle-token-generator"]
-    }
-    
-    "wrapped-secret-id-generator" = {
-      aliases = ["approle-wrapped-secret-id-generator"]
+
+    "wrapped_secret_id_generator" = {
+      aliases = ["approle_wrapped_secret_id_generator"]
     }
   }
 
