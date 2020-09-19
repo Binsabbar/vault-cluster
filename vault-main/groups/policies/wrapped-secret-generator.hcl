@@ -1,4 +1,3 @@
-// to be able to login
 path "auth/approle/role/cicd_dev_deployer/secret-id" {
   capabilities = [ "create", "update", "list"]
 }
