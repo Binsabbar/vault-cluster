@@ -1,0 +1,6 @@
+export VAULT_ADDR=https://vault.internal:8200
+export VAULT_CACERT=
+
+# wrapped secret id generator creds goes here
+export APPROLE_SECRET_ID=""
+export APPROLE_ID=""
