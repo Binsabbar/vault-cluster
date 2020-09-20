@@ -22,6 +22,24 @@ resource "vault_identity_group_member_entity_ids" "members_wrapped_secret_id_gen
   group_id          = var.groups.wrapped_secret_id_generator.id
 }
 
+resource "vault_identity_group_member_entity_ids" "members_cicd_dev_deployer" {
+  exclusive         = true
+  member_entity_ids = [vault_identity_entity.entity["cicd_dev"].id]
+  group_id          = var.groups.development.id
+}
+
+resource "vault_identity_group_member_entity_ids" "members_uat_deployer" {
+  exclusive         = true
+  member_entity_ids = [vault_identity_entity.entity["cicd_uat"].id]
+  group_id          = var.groups.uat.id
+}
+
+resource "vault_identity_group_member_entity_ids" "members_prod_deployer" {
+  exclusive         = true
+  member_entity_ids = [vault_identity_entity.entity["cicd_prod"].id]
+  group_id          = var.groups.production.id
+}
+
 // Create Roles
 resource "vault_approle_auth_backend_role" "role" {
   for_each           = toset(local.backend_roles)

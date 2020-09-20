@@ -31,7 +31,7 @@ resource "vault_identity_group" "wrapped_secret_id_generator" {
 resource "vault_identity_group" "development" {
   name     = "development"
   type     = "internal"
-  policies = []
+  policies = [vault_policy.dev_deployer.name]
 
   lifecycle {
     ignore_changes = [member_entity_ids]
@@ -41,7 +41,7 @@ resource "vault_identity_group" "development" {
 resource "vault_identity_group" "uat" {
   name     = "uat"
   type     = "internal"
-  policies = []
+  policies = [vault_policy.uat_deployer.name]
 
   lifecycle {
     ignore_changes = [member_entity_ids]
@@ -51,7 +51,7 @@ resource "vault_identity_group" "uat" {
 resource "vault_identity_group" "production" {
   name     = "prod"
   type     = "internal"
-  policies = []
+  policies = [vault_policy.prod_deployer.name]
 
   lifecycle {
     ignore_changes = [member_entity_ids]
