@@ -1,7 +1,14 @@
 # Vault on Docker Managed by Terraform
-Simple Setup for Vault on Docker. The setup relies on backend storage of type `file`. It is not recommanded as it does not suppoert HA.
-Suggested approach is to use `etcd` as cluster, and use it as backend storage for `Vault`.
+Simple Setup for Vault on Docker. The setup will create a cluster of 3 `etcd` nodes to store `vault` data. The cluster is deployed to Oracle Cloud in a privet subnet with a public LB. Here is how it will be setup in Cloud:
 
+![cloud setup](./media/vault-cloud.png)
+
+## Local Setup (Demo)
+This setup can be used locally for demo purpose as well. For networking in proxying, `tearfik` is used to mimik cloud deployemnt.
+
+![local setup](./media/vault-local.png)
+
+## Terraform 
 Terraform is used to mainly manage policies and access to Vault itself. It is not used to set and revoke keys. Storing sensitive keys in Terraform is
 highly discouraged.
 
@@ -10,8 +17,9 @@ highly discouraged.
 * Docker version 19+
 * Docker-Compose 1.26+
 * Terraform 0.12+
+* jq (optional)
 
-# Setup Vault with etcd cluster:
+# Setup Vault Locally with etcd cluster:
 1. `cd docker/reverse-proxy && docker-compose up -d`
 2. Create certificates and keys for etcd
     1. `cd docker/etcd/certs`
@@ -31,6 +39,9 @@ highly discouraged.
 127.0.0.1 vault.internal traefik.internal etcd.internal
 ```
 6. You can access vault via `https://vault.internal:8200` and traefik ui via: `http://traefik.internal:8080`
+
+Follow [vault docs](https://www.vaultproject.io/docs) on how to operate vault.
+
 
 Todos:
 
