@@ -10,6 +10,8 @@ module "groups" {
 
 module "userpass" {
   source = "./userpass"
+
+  groups = module.groups.groups
 }
 
 module "approle" {
