@@ -1,15 +1,15 @@
-path "secret/data/apps/uat/*" { 
+path "secret/data/uat/apps/*" { 
   capabilities = ["read", "list"]
 }
 
-path "secret/metadata/apps/uat/*" { 
+path "secret/metadata/uat/apps/*" { 
   capabilities = ["list", "read"]
 }
 
-path "secret/data/infra/uat/*" { 
+path "secret/data/uat/infra/*" { 
   capabilities = ["read", "list"]
 }
 
-path "secret/metadata/infra/uat/*" { 
+path "secret/metadata/uat/infra/*" { 
   capabilities = ["list", "read"]
 }

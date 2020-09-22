@@ -17,3 +17,7 @@ module "approle" {
 
   groups = module.groups.groups
 }
+
+module "secret" {
+  source = "./secret"
+}
