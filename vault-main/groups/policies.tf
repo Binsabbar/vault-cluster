@@ -27,3 +27,15 @@ resource "vault_policy" "prod_deployer" {
 
   policy = file("${path.module}/policies/prod-deployer.hcl")
 }
+
+resource "vault_policy" "developers" {
+  name = "developers"
+
+  policy = file("${path.module}/policies/developers.hcl")
+}
+
+resource "vault_policy" "dev_devops" {
+  name = "dev-devops"
+
+  policy = file("${path.module}/policies/dev-devops.hcl")
+}
