@@ -1,35 +1,17 @@
-// Demo App Env secrets
-path "secret/data/apps/demo/*" { 
+// Demo secrets
+path "secret/data/demo/*" { 
   capabilities = ["read", "list"]
 }
 
-path "secret/metadata/apps/demo/*" { 
+path "secret/metadata/demo/*" { 
   capabilities = ["list", "read"]
 }
 
-// Stage App Env secrets
-path "secret/data/apps/stage/*" { 
+// Stage secrets
+path "secret/data/stage/*" { 
   capabilities = ["read", "list"]
 }
 
-path "secret/metadata/apps/stage/*" { 
-  capabilities = ["list", "read"]
-}
-
-// Demo Infra secrets
-path "secret/data/infra/demo/*" { 
-  capabilities = ["read", "list"]
-}
-
-path "secret/metadata/infra/demo/*" { 
-  capabilities = ["list", "read"]
-}
-
-// Stage Infra secrets
-path "secret/data/infra/stage/*" { 
-  capabilities = ["read", "list"]
-}
-
-path "secret/metadata/infra/stage/*" { 
+path "secret/metadata/stage/*" { 
   capabilities = ["list", "read"]
 }

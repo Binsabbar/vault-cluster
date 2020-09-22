@@ -1,15 +1,15 @@
-path "secret/data/apps/production/*" { 
+path "secret/data/production/apps/*" { 
   capabilities = ["read", "list"]
 }
 
-path "secret/metadata/apps/production/*" { 
+path "secret/metadata/production/apps/*" { 
   capabilities = ["list", "read"]
 }
 
-path "secret/data/infra/production/*" { 
+path "secret/data/production/infra/*" { 
   capabilities = ["read", "list"]
 }
 
-path "secret/metadata/infra/production/*" { 
+path "secret/metadata/production/infra/*" { 
   capabilities = ["list", "read"]
 }
