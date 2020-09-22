@@ -6,5 +6,7 @@ output "groups" {
     development                 = vault_identity_group.development
     uat                         = vault_identity_group.uat
     production                  = vault_identity_group.production
+    developers                  = vault_identity_group.developers
+    dev_devops                  = vault_identity_group.dev_devops
   }
 }
