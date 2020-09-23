@@ -22,6 +22,11 @@ resource "oci_identity_compartment" "compartment" {
   compartment_id = var.tenancy_ocid
 }
 
+data "oci_identity_availability_domain" "ad_1" {
+  compartment_id = oci_identity_compartment.compartment.id
+  ad_number      = 1
+}
+
 module "network" {
   source = "./network"
 
@@ -34,4 +39,13 @@ module "network_sg" {
   compartment = oci_identity_compartment.compartment
   vnc         = module.network.network.vnc
   safe_ips    = var.safe_ips
+}
+
+module "instances" {
+  source = "./instances"
+
+  compartment         = oci_identity_compartment.compartment
+  vnc                 = module.network.network.vnc
+  availability_domain = data.oci_identity_availability_domain.ad_1
+  instances           = local.instances
 }
