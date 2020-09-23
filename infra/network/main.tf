@@ -21,11 +21,11 @@ resource "oci_core_internet_gateway" "internet_gateway" {
   display_name   = "defaultInternetGateway"
 }
 
-// resource "oci_core_nat_gateway" "nat_gateway" {
-//     compartment_id = var.compartment_id
-//     vcn_id         = oci_core_vcn.vnc.id
-//     display_name   = "defaultNatGateway"
-// }
+resource "oci_core_nat_gateway" "nat_gateway" {
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.vnc.id
+  display_name   = "defaultNatGateway"
+}
 
 
 // Routes
@@ -41,13 +41,12 @@ resource "oci_core_default_route_table" "public_route_table" {
 
 resource "oci_core_route_table" "private_route_table" {
   compartment_id = var.compartment_id
-  vcn_id = oci_core_vcn.vnc.id
-  display_name               = "defaultPrivateRouteTable"
+  vcn_id         = oci_core_vcn.vnc.id
+  display_name   = "defaultPrivateRouteTable"
   route_rules {
     destination       = "0.0.0.0/0"
     destination_type  = "CIDR_BLOCK"
-    // network_entity_id = oci_core_nat_gateway.nat_gateway.id
-    network_entity_id = oci_core_internet_gateway.internet_gateway.id
+    network_entity_id = oci_core_nat_gateway.nat_gateway.id
   }
 }
 
@@ -61,7 +60,7 @@ resource "oci_core_subnet" "public_subnet" {
   route_table_id             = oci_core_default_route_table.public_route_table.id
   dns_label                  = "public"
   display_name               = "publicSubnet"
-  security_list_ids          = concat([oci_core_default_security_list.security_list.id], var.public_net_security_list_ids)
+  security_list_ids          = concat([oci_core_default_security_list.public_subnet_security_list.id], var.public_net_security_list_ids)
 }
 
 resource "oci_core_subnet" "private_subnet" {
@@ -71,7 +70,7 @@ resource "oci_core_subnet" "private_subnet" {
   vcn_id                     = oci_core_vcn.vnc.id
   dhcp_options_id            = oci_core_default_dhcp_options.dhcp_options.id
   route_table_id             = oci_core_route_table.private_route_table.id
-  security_list_ids          = concat([oci_core_default_security_list.security_list.id], var.private_net_security_list_ids)
-  dns_label    = "private"
-  display_name = "privateSubnet"
+  security_list_ids          = concat([oci_core_security_list.private_subnet_security_list.id], var.private_net_security_list_ids)
+  dns_label                  = "private"
+  display_name               = "privateSubnet"
 }
