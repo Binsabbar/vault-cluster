@@ -1,0 +1,19 @@
+---
+
+- name: update servers
+  hosts: docker
+  remote_user: ubuntu
+  tasks:
+    - name: update system
+      become: yes
+      apt:
+        update_cache: yes
+    - name: Update all packages to the latest version
+      become: yes
+      apt:
+        upgrade: dist
+    - name: Install Docker
+      include_role: 
+        apply:
+            become: true
+        name: ansible-docker
