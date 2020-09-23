@@ -27,3 +27,11 @@ module "network" {
 
   compartment_id = oci_identity_compartment.compartment.id
 }
+
+module "network_sg" {
+  source = "./network-sg"
+
+  compartment = oci_identity_compartment.compartment
+  vnc         = module.network.network.vnc
+  safe_ips    = var.safe_ips
+}

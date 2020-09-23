@@ -55,10 +55,10 @@ resource "oci_core_security_list" "private_subnet_security_list" {
   display_name   = "private_subnetSecurityList"
 
   ingress_security_rules {
-    protocol  = local.protocols.tcp
+    protocol    = local.protocols.tcp
     description = "Inbound All TCP from public subnet"
-    source    = oci_core_subnet.public_subnet.cidr_block
-    stateless = true
+    source      = oci_core_subnet.public_subnet.cidr_block
+    stateless   = true
   }
 
   egress_security_rules {
