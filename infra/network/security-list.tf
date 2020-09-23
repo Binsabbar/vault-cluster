@@ -6,7 +6,7 @@ locals {
   }
 }
 
-resource "oci_core_default_security_list" "security_list" {
+resource "oci_core_default_security_list" "public_subnet_security_list" {
   manage_default_resource_id = oci_core_vcn.vnc.default_security_list_id
   display_name               = "defaultSecurityList"
 
@@ -36,7 +36,6 @@ resource "oci_core_default_security_list" "security_list" {
     }
   }
 
-  # Todo: It is not good practice to not open up egress completely like this
   egress_security_rules {
     destination = "0.0.0.0/0"
     description = "Outbound All TCP"
@@ -46,6 +45,24 @@ resource "oci_core_default_security_list" "security_list" {
   egress_security_rules {
     destination = "0.0.0.0/0"
     description = "Outbound All TCP"
+    protocol    = local.protocols.udp
+  }
+}
+
+resource "oci_core_security_list" "private_subnet_security_list" {
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.vnc.id
+  display_name   = "private_subnetSecurityList"
+
+  egress_security_rules {
+    destination = "0.0.0.0/0"
+    description = "Outbound All TCP"
+    protocol    = local.protocols.tcp
+  }
+
+  egress_security_rules {
+    destination = "0.0.0.0/0"
+    description = "Outbound All UDP"
     protocol    = local.protocols.udp
   }
 }
