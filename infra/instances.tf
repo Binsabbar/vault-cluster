@@ -1,4 +1,9 @@
 locals {
+  instanceState = {
+    RUNNING = "RUNNING"
+    STOPPED = "STOPPED"
+  }
+
   images_ids = {
     ubuntu_20 = "ocid1.image.oc1.me-jeddah-1.aaaaaaaay5jjjjj5bv2hh5553oi2ljo7nc36dxhx75sarcecs5ozlu374lja"
   }
@@ -41,27 +46,32 @@ locals {
       config          = local.instances_configs["config-public"]
       volume_size     = 50
       autherized_keys = var.jumpbox_autherized_keys
+      state           = local.instanceState.RUNNING
     }
     "etcd-1" = {
       config          = local.instances_configs["etcd-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
+      state           = local.instanceState.STOPPED
     }
     "etcd-2" = {
       config          = local.instances_configs["etcd-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
+      state           = local.instanceState.STOPPED
     }
     "etcd-3" = {
       config          = local.instances_configs["etcd-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
+      state           = local.instanceState.STOPPED
     }
 
     "vault" = {
       config          = local.instances_configs["vault-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
+      state           = local.instanceState.STOPPED
     }
   }
 }

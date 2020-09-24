@@ -19,6 +19,7 @@ variable "vnc" {
 variable "instances" {
   type = map(object({
     volume_size     = number
+    state           = string
     autherized_keys = string
     config = object({
       shape           = string

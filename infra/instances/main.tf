@@ -6,6 +6,7 @@ resource "oci_core_instance" "instances" {
   shape                = each.value.config.shape
   display_name         = each.key
   preserve_boot_volume = true
+  state                = each.value.state
   metadata = {
     ssh_authorized_keys = each.value.autherized_keys
   }
