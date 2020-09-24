@@ -1,0 +1,27 @@
+---
+etcd:
+  ca_common_name: etcd.vault.oraclecloud.com
+  ca_organization_name: Binsabbar's Inc
+  ca_dns_names: 
+    - etcd.vault.oraclecloud.com
+
+  clients:
+    - name: etcd-node-1
+      common_name: etcd-1.vault.oraclecloud.com
+      dns_names:
+        - etcd-1.vault.oraclecloud.com
+    - name: vault-client
+      common_name: vault.vault.oraclecloud.com
+      dns_names:
+        - vault.oraclecloud.com
+vault:
+  ca_common_name: etcd.vault.oraclecloud.com
+  ca_organization_name: Binsabbar's Inc
+  ca_dns_names: 
+    - etcd.vault.oraclecloud.com
+
+  clients:
+    - name: vault-node
+      common_name: vault.vault.oraclecloud.com
+      dns_names:
+        - vault.oraclecloud.com
