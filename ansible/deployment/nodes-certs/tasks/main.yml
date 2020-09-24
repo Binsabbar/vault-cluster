@@ -1,0 +1,27 @@
+- name: Create deployment directory
+  file:
+    path: ./certs-terraform
+    state: directory
+    mode: '0755'
+
+- name: create terraform files
+  local_action: 
+    module: template
+    src: "{{ item }}.j2"
+    dest: ./certs-terraform/{{ item }}
+  with_items:
+    - etcd_ca.tf
+    - vault_ca.tf
+    - etcd_nodes.tf
+    - vault_nodes.tf
+    
+
+- name: Init Terraform
+  command: terraform init
+  args:
+    chdir: "./certs-terraform"
+
+- name: Apply Terraform
+  command: terraform apply -auto-approve
+  args:
+    chdir: "./certs-terraform"
