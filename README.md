@@ -3,15 +3,27 @@ Simple Setup for Vault on Docker. The setup will create a cluster of 3 `etcd` no
 
 ![cloud setup](./media/vault-cloud.png)
 
+## Repo Structure
+
+| directory        | Description            | needed for  |
+| -------------  |:-------------:| -----:|
+| ansible        | playbooks that are used to install docker on cloud instances and deploy etcd and vault | Cloud |
+| docker         | docker-compose files for tearfik, etcd and vault |   Local/Cloud |
+| docker/**/certs| terraform files to automate generation of certs for etcd and vault |   Local |
+| edgeRouter     | not used yet |    - |
+| infra          | IaC for creating instances in Oracle Cloud | Cloud |
+| media          | pics for README | - |
+| scripts        | bash scripts to interact with vault | Local/Cloud |
+| vault-main     | terraform files for managing vault | Local/Cloud |
+
+
 ## Local Setup (Demo)
 This setup can be used locally for demo purpose as well. For networking in proxying, `tearfik` is used to mimik cloud deployemnt.
 
 ![local setup](./media/vault-local.png)
 
-## Terraform 
-Terraform is used to mainly manage policies and access to Vault itself. It is not used to set and revoke keys. Storing sensitive keys in Terraform is
-highly discouraged.
-
+## Terraform with Vault
+Terraform is used to mainly manage policies and access to Vault itself. It is not used to set and revoke keys. Storing sensitive keys in Terraform is highly discouraged.
 
 # Prerequisite:
 * Docker version 19+
@@ -42,6 +54,9 @@ highly discouraged.
 
 Follow [vault docs](https://www.vaultproject.io/docs) on how to operate vault.
 
+
+# Setup Vault in the Cloud with etcd cluster:
+TBW
 
 Todos:
 
