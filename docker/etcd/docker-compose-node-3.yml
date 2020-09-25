@@ -35,6 +35,7 @@ services:
       NODE_URL: etcd-3.internal
       CLUSTER_NODES: "node1=https://etcd-1.internal:2380,node2=https://etcd-2.internal:2380,node3=https://etcd-3.internal:2380"
       INITIAL_CLUSTER_TOKEN: etcd-vault-cluster
+      CLIENT_URLS: etcd.internal
     entrypoint: sh 
     command:
       - -c 
@@ -45,7 +46,7 @@ services:
         --initial-cluster-token=$$INITIAL_CLUSTER_TOKEN
         --initial-cluster-state=new
         --initial-cluster=$$CLUSTER_NODES
-        --advertise-client-urls=https://etcd.internal:2379
+        --advertise-client-urls=https://$$CLIENT_URLS:2379
         --listen-client-urls=https://0.0.0.0:2379
         --cert-file=/certs/etcd-node-cert.pem
         --key-file=/certs/etcd-node-key.pem
