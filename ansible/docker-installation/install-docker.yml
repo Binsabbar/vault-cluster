@@ -17,3 +17,9 @@
         apply:
             become: true
         name: ansible-docker
+    - name: adding existing user '{{ ansible_user }}' to group docker
+      become: yes
+      user:
+        name: '{{ ansible_user }}'
+        groups: docker
+        append: yes
