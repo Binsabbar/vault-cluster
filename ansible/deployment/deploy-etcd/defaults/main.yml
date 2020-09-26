@@ -1,0 +1,6 @@
+---
+etcd_host_index: "{{ groups['etcd_hosts'].index(inventory_hostname) + 1 }}"
+domain: private.vaultvnc.oraclevcn.com
+service_name: "{{ ansible_host }}"
+service_hostname: "etcd.{{ domain }}"
+service_node_hostname: "{{ service_name }}.{{ domain }}"

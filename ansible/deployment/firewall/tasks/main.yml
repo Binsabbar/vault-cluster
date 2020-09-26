@@ -1,0 +1,21 @@
+- name: Install firewalld to manage firewall
+  become: yes
+  apt:
+    name: firewalld
+    state: present
+    
+- name: "open required ports in the firewall - oracle cloud has predefined rules"
+  command: "firewall-cmd  --permanent --zone=public --add-port={{ item }}/tcp"
+  become: true
+  with_items: "{{ tcp_ports}}"
+  when: tcp_ports is iterable
+
+- name: "open required ports in the firewall - oracle cloud has predefined rules"
+  command: "firewall-cmd  --permanent --zone=public --add-port={{ item }}/udp"
+  become: true
+  with_items: "{{ udp_ports}}"
+  when: udp_ports is iterable
+
+- name: "reload firewall-cmd"
+  command: "firewall-cmd  --reload"
+  become: true

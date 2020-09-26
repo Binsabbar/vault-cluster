@@ -4,17 +4,8 @@ etcd-1
 etcd-2
 etcd-3
 
-[etcd-host]
+[etcd_hosts]
 etcd-[1:3]
 
-[etcd-node-1]
-etcd-1
-
-[etcd-node-1]
-etcd-2
-
-[etcd-node-1]
-etcd-3
-
-[vault-host]
+[vault_host]
 vault
