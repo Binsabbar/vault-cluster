@@ -42,8 +42,18 @@ resource "oci_core_network_security_group_security_rule" "allow_vnc_access" {
   network_security_group_id = oci_core_network_security_group.private_subnet_nsg.id
   description               = "Allow All"
   direction                 = "INGRESS"
-  protocol                  = local.protocols.tcp
+  protocol                  = "all"
   source                    = var.vnc.cidr_block
   source_type               = "CIDR_BLOCK"
   stateless                 = false
 }
+
+// resource "oci_core_network_security_group_security_rule" "egress_private" {
+//   network_security_group_id = oci_core_network_security_group.private_subnet_nsg.id
+//   description               = "Allow All"
+//   direction                 = "EGRESS"
+//   protocol                  = "all"
+//   destination               = "0.0.0.0/0"
+//   destination_type          = "CIDR_BLOCK"
+//   stateless                 = false
+// }

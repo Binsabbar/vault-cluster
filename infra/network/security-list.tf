@@ -54,14 +54,6 @@ resource "oci_core_security_list" "private_subnet_security_list" {
   vcn_id         = oci_core_vcn.vnc.id
   display_name   = "private_subnetSecurityList"
 
-  // for ingress rules rely on nsg for more control
-  // ingress_security_rules {
-  //   protocol    = local.protocols.tcp
-  //   description = "Inbound All TCP from public subnet"
-  //   source      = oci_core_subnet.public_subnet.cidr_block
-  //   stateless   = true
-  // }
-
   egress_security_rules {
     destination = "0.0.0.0/0"
     description = "Outbound All TCP"
