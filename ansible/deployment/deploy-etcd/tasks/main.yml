@@ -1,0 +1,38 @@
+- name: Create certs directory
+  file:
+    path: ~/etcd/certs
+    state: directory
+    mode: '0755'
+
+- name: Copy certs
+  copy:
+    src: "../../certs-terraform/{{ item.src }}"
+    dest: "~/etcd/certs/{{ item.dest }}"
+    owner: ubuntu
+    group: ubuntu
+    mode: '0600'
+  with_items:
+    - src: etcd-ca-cert.pem
+      dest: etcd-ca-cert.pem
+    - src: etcd-node-{{ etcd_host_index }}-cert.pem
+      dest: etcd-node-cert.pem
+    - src: etcd-node-{{ etcd_host_index }}-key.pem
+      dest: etcd-node-key.pem
+
+- name: Copy docker-compose file    
+  template:
+    src: docker-compose.yml.j2
+    dest: "~/etcd/docker-compose.yml"
+
+- name: "Create docker container volume for {{ service_name }}"
+  command: "docker volume create {{ service_name }}"
+  args:
+      chdir: "~/etcd/"
+
+- name: start container
+  command: "docker-compose {{ item }}"
+  args:
+      chdir: "~/etcd/"
+  with_items:
+    - down --remove-orphans
+    - up -d

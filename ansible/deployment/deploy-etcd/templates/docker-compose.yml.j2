@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  {{ service_name }}:
+    image: quay.io/coreos/etcd:latest
+    labels:
+      # Cluster KV Service
+      - "traefik.tcp.routers.etcd.service=etcd"
+      - "traefik.tcp.services.etcd.loadbalancer.server.port=2379"
+      - "traefik.tcp.routers.etcd.rule=HostSNI(`{{ service_hostname }}`)"
+      - "traefik.tcp.routers.etcd.entrypoints=etcd"
+      - "traefik.tcp.routers.etcd.tls.passthrough=true"
+      - "traefik.tcp.routers.etcd.tls=true"
+      # Node Service
+      - "traefik.tcp.routers.{{ service_name }}.service={{ service_name }}"
+      - "traefik.tcp.services.{{ service_name }}.loadbalancer.server.port=2380"
+      - "traefik.tcp.routers.{{ service_name }}.rule=HostSNI(`{{ service_node_hostname }}`)"
+      - "traefik.tcp.routers.{{ service_name }}.entrypoints=etcd-nodes"
+      - "traefik.tcp.routers.{{ service_name }}.tls.passthrough=true"
+      - "traefik.tcp.routers.{{ service_name }}.tls=true"
+    volumes:
+      - {{ service_name }}:/etcd-data
+      - ./certs/etcd-node-cert.pem:/certs/etcd-node-cert.pem
+      - ./certs/etcd-node-key.pem:/certs/etcd-node-key.pem
+      - ./certs/etcd-ca-cert.pem:/certs/etcd-ca-cert.pem
+    ports:
+      - 2379:2380
+      - 2380:2380
+    environment: 
+      NODE_NAME: node{{ etcd_host_index }}
+      NODE_URL: {{ service_node_hostname }}
+      CLUSTER_NODES: "{% for node in groups['etcd_hosts'] %}node{{loop.index}}=https://{{node}}.{{domain}}:2380,{% endfor %}"
+      INITIAL_CLUSTER_TOKEN: etcd-vault-cluster
+      CLIENT_URLS: {{ service_hostname }}
+    entrypoint: sh 
+    command:
+      - -c 
+      - > 
+        /usr/local/bin/etcd
+        --data-dir=/etcd-data
+        --name=$$NODE_NAME
+        --initial-cluster-token=$$INITIAL_CLUSTER_TOKEN
+        --initial-cluster-state=new
+        --initial-cluster=$$CLUSTER_NODES
+        --advertise-client-urls=https://$$CLIENT_URLS:2379
+        --listen-client-urls=https://0.0.0.0:2379
+        --cert-file=/certs/etcd-node-cert.pem
+        --key-file=/certs/etcd-node-key.pem
+        --trusted-ca-file=/certs/etcd-ca-cert.pem
+        --initial-advertise-peer-urls=https://$$NODE_URL:2380
+        --listen-peer-urls=https://0.0.0.0:2380
+        --peer-client-cert-auth 
+        --peer-trusted-ca-file=/certs/etcd-ca-cert.pem
+        --peer-cert-file=/certs/etcd-node-cert.pem
+        --peer-key-file=/certs/etcd-node-key.pem
+      
+volumes:
+    {{ service_name }}:

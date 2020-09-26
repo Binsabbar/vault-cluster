@@ -3,63 +3,46 @@
   hosts: localhost
   vars:
     etcd:
-      ca_common_name: etcd.vault.oraclecloud.com
+      ca_common_name: etcd.private.vaultvnc.oraclevcn.com
       ca_organization_name: Binsabbar's Inc
       ca_dns_names: 
-        - etcd.vault.oraclecloud.com
+        - etcd.private.vaultvnc.oraclevcn.com
       clients:
         - name: etcd-node-1
-          common_name: etcd-1.vault.oraclecloud.com
+          common_name: etcd-1.private.vaultvnc.oraclevcn.com
           dns_names:
-            - etcd-1.vault.oraclecloud.com
+            - etcd-1.private.vaultvnc.oraclevcn.com
+        - name: etcd-node-2
+          common_name: etcd-2.private.vaultvnc.oraclevcn.com
+          dns_names:
+            - etcd-2.private.vaultvnc.oraclevcn.com
+        - name: etcd-node-3
+          common_name: etcd-3.private.vaultvnc.oraclevcn.com
+          dns_names:
+            - etcd-3.private.vaultvnc.oraclevcn.com
         - name: vault-client
-          common_name: vault.vault.oraclecloud.com
+          common_name: vault.private.vaultvnc.oraclevcn.com
           dns_names:
-            - vault.oraclecloud.com
+            - private.vaultvnc.oraclevcn.com
     vault:
-      ca_common_name: etcd.vault.oraclecloud.com
+      ca_common_name: vault.private.vaultvnc.oraclevcn.com
       ca_organization_name: Binsabbar's Inc
       ca_dns_names: 
-        - etcd.vault.oraclecloud.com
+        - vault.private.vaultvnc.oraclevcn.com
       clients:
         - name: vault-node
-          common_name: vault.vault.oraclecloud.com
+          common_name: vault.private.vaultvnc.oraclevcn.com
           dns_names:
-            - vault.oraclecloud.com
+            - vault.private.vaultvnc.oraclevcn.com
   roles:
     -  nodes-certs
 
-# - name: update servers
-#   hosts: etcd
-#   remote_user: ubuntu
-#   tasks:
-#     - name: Create deployment directory
-#       file:
-#         path: ~/etcd
-#         state: directory
-#         mode: '0755'
-#     - name: Create certs directory
-#       file:
-#         path: ~/etcd/certs
-#         state: directory
-#         mode: '0755'
-#     - name: Copy certs
-#       copy:
-#         src: "../docker/etcd/certs/{{ item }}"
-#         dest: "~/etcd/certs/{{ item }}"
-#         state: directory
-#         owner: ubuntu
-#         group: ubuntu
-#         mode: '0600'
-#       with_items:
-#         - etcd-ca-cert.pem
-#         - etcd-node-1-cert.pem
-#         - etcd-node-1-key.pem
-#     - name: Copy docker-compose file
-#       copy:
-#         src: "../docker/etcd/docker-compose-node-1.yml"
-#         dest: "~/etcd/docker-compose.yml"
-#         state: directory
-#         owner: ubuntu
-#         group: ubuntu
-#         mode: '0600'    
+- name: Generate Terraform Files 
+  hosts: etcd_hosts
+  vars:
+    tcp_ports:
+      - 2379
+      - 2380
+  roles:
+    - firewall
+    - deploy-etcd
