@@ -49,3 +49,13 @@
   roles:
     - firewall
     - deploy-etcd
+
+- name: Generate Terraform Files 
+  hosts: vault_host
+  vars:
+    tcp_ports:
+      - 8200
+      - 8201
+  roles:
+    - firewall
+    - deploy-vault

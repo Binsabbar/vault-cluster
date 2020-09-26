@@ -1,0 +1,4 @@
+---
+domain: private.vaultvnc.oraclevcn.com
+service_hostname: "vault.{{ domain }}"
+etcd_hostname: "etcd.{{ domain }}"

@@ -49,3 +49,7 @@ module "instances" {
   availability_domain = data.oci_identity_availability_domain.ad_1
   instances           = local.instances
 }
+
+output "instances" {
+  value = module.instances.instances
+}
