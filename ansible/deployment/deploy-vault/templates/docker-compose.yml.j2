@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  vault:
+    image: vault
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - 8200:8200
+      - 8201:8201
+    extra_hosts:
+      - "{{ etcd_hostname }}:192.168.100.2" # temp until LB is cloud is configured
+    volumes:
+      - ./server.hcl:/vault/config/server.hcl
+      - ./certs/vault-ca-cert.pem:/certs/vault-ca-cert.pem
+      - ./certs/vault-node-cert.pem:/certs/vault-node-cert.pem
+      - ./certs/vault-node-key.pem:/certs/vault-node-key.pem
+      - ./certs/etcd-ca-cert.pem:/certs/etcd-ca-cert.pem
+      - ./certs/vault-client-key.pem:/certs/vault-client-key.pem
+      - ./certs/vault-client-cert.pem:/certs/vault-client-cert.pem
+    command: sh -c "vault server -config /vault/config"

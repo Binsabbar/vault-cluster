@@ -11,6 +11,7 @@ locals {
   shapes = {
     small    = "VM.Standard.E2.1.Micro"
     standard = "VM.Standard.E2.1"
+    standard12 = "VM.Standard2.1"
   }
 
   instances_configs = {
@@ -52,26 +53,26 @@ locals {
       config          = local.instances_configs["etcd-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
-      state           = local.instanceState.STOPPED
+      state           = local.instanceState.RUNNING
     }
     "etcd-2" = {
       config          = local.instances_configs["etcd-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
-      state           = local.instanceState.STOPPED
+      state           = local.instanceState.RUNNING
     }
     "etcd-3" = {
       config          = local.instances_configs["etcd-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
-      state           = local.instanceState.STOPPED
+      state           = local.instanceState.RUNNING
     }
 
     "vault" = {
       config          = local.instances_configs["vault-instance"]
       volume_size     = 50
       autherized_keys = var.private_instances_autherized_keys
-      state           = local.instanceState.STOPPED
+      state           = local.instanceState.RUNNING
     }
   }
 }

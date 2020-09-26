@@ -31,6 +31,24 @@ resource "oci_core_network_security_group_security_rule" "ssh_from_safe_ips" {
   }
 }
 
+resource "oci_core_network_security_group_security_rule" "vault_from_safe_ips" {
+  for_each                  = toset(var.safe_ips)
+  network_security_group_id = oci_core_network_security_group.public_subnet_nsg.id
+  direction                 = "INGRESS"
+  protocol                  = local.protocols.tcp
+  description               = "Ingress Rule for SSH Connections from IP ${each.value}"
+  stateless                 = false
+  source                    = each.value
+  source_type               = "CIDR_BLOCK"
+
+  tcp_options {
+    destination_port_range {
+      max = 8200
+      min = 8200
+    }
+  }
+}
+
 // Private Subnet NSG
 resource "oci_core_network_security_group" "private_subnet_nsg" {
   compartment_id = var.compartment.id
