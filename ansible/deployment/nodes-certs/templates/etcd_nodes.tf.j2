@@ -12,6 +12,10 @@ locals {
           {% for uri in item.dns_names %} "{{ uri }}", {% endfor %}
 
         ]
+        ips   = [
+          {% for ip in item.ips | default([])  %} "{{ ip }}", {% endfor %}
+
+        ]
       },
     {% endfor%}
 
@@ -32,6 +36,7 @@ resource "tls_cert_request" "etcd_node_csr" {
   private_key_pem = tls_private_key.etcd_node_key[each.key].private_key_pem
   uris            = each.value.uris
   dns_names       = each.value.dns_names
+  ip_addresses    = each.value.ips
   subject {
     common_name  = each.value.common_name
     organization = "Binsabbar's Inc"

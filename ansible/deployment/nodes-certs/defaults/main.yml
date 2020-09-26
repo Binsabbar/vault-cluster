@@ -10,10 +10,14 @@ etcd:
       common_name: etcd-1.vault.oraclecloud.com
       dns_names:
         - etcd-1.vault.oraclecloud.com
+      ips:
+          - 127.0.0.1
     - name: vault-client
       common_name: vault.vault.oraclecloud.com
       dns_names:
         - vault.oraclecloud.com
+      ips:
+        - 127.0.0.1
 vault:
   ca_common_name: etcd.vault.oraclecloud.com
   ca_organization_name: Binsabbar's Inc
@@ -25,3 +29,5 @@ vault:
       common_name: vault.vault.oraclecloud.com
       dns_names:
         - vault.oraclecloud.com
+      ips:
+        - 127.0.0.1
