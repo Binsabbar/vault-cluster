@@ -1,5 +1,5 @@
 # Vault on Docker Managed by Terraform
-Simple Setup for Vault on Docker. The setup will create a cluster of 3 `etcd` nodes to store `vault` data. The cluster is deployed to Oracle Cloud in a privet subnet with a public LB. Here is how it will be setup in Cloud:
+Simple Setup for Vault on Docker. The setup will create a cluster of 3 `etcd` nodes to store `vault` data. The cluster is deployed to Oracle Cloud in a private subnet with a public LB. Here is how it will be setup in Cloud:
 
 ![cloud setup](./media/vault-cloud.png)
 
