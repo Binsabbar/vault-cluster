@@ -4,8 +4,14 @@ etcd:
   ca_organization_name: Binsabbar's Inc
   ca_dns_names: 
     - etcd.vault.oraclecloud.com
-
   clients:
+    - name: etcd-node-1
+      common_name: etcd-1.vault.oraclecloud.com
+      dns_names:
+        - etcd-1.vault.oraclecloud.com
+      ips:
+          - 127.0.0.1
+  nodes:
     - name: etcd-node-1
       common_name: etcd-1.vault.oraclecloud.com
       dns_names:

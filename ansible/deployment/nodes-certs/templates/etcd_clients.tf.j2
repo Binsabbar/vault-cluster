@@ -1,6 +1,6 @@
 locals {
-  etcd_nodes = {
-    {% for item in etcd.nodes %}
+  etcd_clients = {
+    {% for item in etcd.clients %}
       
       "{{ item.name }}" = {
         common_name = "{{ item.common_name }}"
@@ -22,18 +22,18 @@ locals {
   }
 }
 
-resource "tls_private_key" "etcd_node_key" {
-  for_each = local.etcd_nodes
+resource "tls_private_key" "etcd_client_key" {
+  for_each = local.etcd_clients
 
   algorithm = "RSA"
   rsa_bits  = 4048
 }
 
-resource "tls_cert_request" "etcd_node_csr" {
-  for_each = local.etcd_nodes
+resource "tls_cert_request" "etcd_client_csr" {
+  for_each = local.etcd_clients
 
-  key_algorithm   = tls_private_key.etcd_node_key[each.key].algorithm
-  private_key_pem = tls_private_key.etcd_node_key[each.key].private_key_pem
+  key_algorithm   = tls_private_key.etcd_client_key[each.key].algorithm
+  private_key_pem = tls_private_key.etcd_client_key[each.key].private_key_pem
   dns_names       = each.value.dns_names
   ip_addresses    = each.value.ips
   subject {
@@ -42,10 +42,10 @@ resource "tls_cert_request" "etcd_node_csr" {
   }
 }
 
-resource "local_file" "etcd_node_key" {
-  for_each = local.etcd_nodes
+resource "local_file" "etcd_client_key" {
+  for_each = local.etcd_clients
 
-  content         = tls_private_key.etcd_node_key[each.key].private_key_pem
+  content         = tls_private_key.etcd_client_key[each.key].private_key_pem
   filename        = "${path.module}/${each.key}-key.pem"
   file_permission = "0600"
 }

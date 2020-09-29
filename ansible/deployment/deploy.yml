@@ -7,7 +7,7 @@
       ca_organization_name: Binsabbar's Inc
       ca_dns_names: 
         - etcd.private.vaultvnc.oraclevcn.com
-      clients:
+      nodes:
         - name: etcd-node-1
           common_name: etcd-1.private.vaultvnc.oraclevcn.com
           dns_names:
@@ -23,6 +23,7 @@
           dns_names:
             - etcd.private.vaultvnc.oraclevcn.com
             - etcd-3.private.vaultvnc.oraclevcn.com
+      clients:
         - name: vault-client
           common_name: vault.private.vaultvnc.oraclevcn.com
           dns_names:

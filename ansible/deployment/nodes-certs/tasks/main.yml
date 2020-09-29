@@ -13,6 +13,7 @@
     - etcd_ca.tf
     - vault_ca.tf
     - etcd_nodes.tf
+    - etcd_clients.tf
     - vault_nodes.tf
     
 
