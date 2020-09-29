@@ -1,0 +1,11 @@
+## Static configuration
+[providers.docker]
+[docker]
+  network = "reverse-proxy"
+  domain = "internal"
+  exposeByDefault = false
+
+[api]
+  insecure = true
+  dashboard = true
+  debug = true

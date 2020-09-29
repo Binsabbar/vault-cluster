@@ -1,0 +1,23 @@
+- name: Create traefik directory
+  file:
+    path: ~/traefik
+    state: directory
+    mode: '0755'
+
+- name: Copy traefik docker-compose
+  template:
+    src: docker-compose.yml.j2
+    dest: "~/traefik/docker-compose.yml"
+
+- name: Copy traefik config
+  template:
+    src: traefik.toml
+    dest: "~/traefik/traefik.toml"
+
+- name: start container
+  command: "docker-compose {{ item }}"
+  args:
+      chdir: "~/etcd/"
+  with_items:
+    - down --remove-orphans
+    - up -d

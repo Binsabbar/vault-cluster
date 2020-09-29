@@ -53,6 +53,7 @@
       - 2380
   roles:
     - firewall
+    # - deploy-traefik
     - deploy-etcd
 
 - name: Generate Terraform Files 
