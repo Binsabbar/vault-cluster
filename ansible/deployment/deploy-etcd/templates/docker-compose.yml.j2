@@ -24,7 +24,7 @@ services:
       - ./certs/etcd-node-key.pem:/certs/etcd-node-key.pem
       - ./certs/etcd-ca-cert.pem:/certs/etcd-ca-cert.pem
     ports:
-      - 2379:2380
+      - 2379:2379
       - 2380:2380
     environment: 
       NODE_NAME: node{{ etcd_host_index }}
