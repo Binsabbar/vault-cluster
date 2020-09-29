@@ -33,7 +33,6 @@ resource "tls_cert_request" "vault_node_csr" {
 
   key_algorithm   = tls_private_key.vault_node_key[each.key].algorithm
   private_key_pem = tls_private_key.vault_node_key[each.key].private_key_pem
-  uris            = each.value.uris
   dns_names       = each.value.dns_names
   ip_addresses    = each.value.ips
   subject {

@@ -50,6 +50,25 @@ resource "tls_locally_signed_cert" "etcd_node_cert" {
   ]
 }
 
+resource "tls_locally_signed_cert" "etcd_clients_cert" {
+  for_each = local.etcd_clients
+
+  cert_request_pem = tls_cert_request.etcd_client_csr[each.key].cert_request_pem
+
+  ca_key_algorithm   = tls_self_signed_cert.etcd_ca_cert.key_algorithm
+  ca_private_key_pem = tls_private_key.etcd_ca_key.private_key_pem
+  ca_cert_pem        = tls_self_signed_cert.etcd_ca_cert.cert_pem
+
+  validity_period_hours = local.cert_period
+
+  allowed_uses = [
+    "key_encipherment",
+    "digital_signature",
+    "client_auth",
+    "signing"
+  ]
+}
+
 resource "local_file" "etcd_ca_private_key" {
   content         = tls_private_key.etcd_ca_key.private_key_pem
   filename        = "${path.module}/etcd-ca-key.pem"
@@ -66,6 +85,14 @@ resource "local_file" "etcd_node_cert" {
   for_each = local.etcd_nodes
 
   content         = "${tls_locally_signed_cert.etcd_node_cert[each.key].cert_pem}"
+  filename        = "${path.module}/${each.key}-cert.pem"
+  file_permission = "0600"
+}
+
+resource "local_file" "etcd_client_cert" {
+  for_each = local.etcd_clients
+
+  content         = "${tls_locally_signed_cert.etcd_clients_cert[each.key].cert_pem}"
   filename        = "${path.module}/${each.key}-cert.pem"
   file_permission = "0600"
 }
