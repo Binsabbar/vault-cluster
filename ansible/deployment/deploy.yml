@@ -1,5 +1,5 @@
 ---
-- name: Generate Terraform Files 
+- name: Generate Terraform Files and Certs 
   hosts: localhost
   vars:
     etcd:
@@ -45,7 +45,7 @@
   roles:
     -  nodes-certs
 
-- name: Generate Terraform Files 
+- name: Deploy etcd cluster
   hosts: etcd_hosts
   vars:
     tcp_ports:
@@ -56,7 +56,7 @@
     # - deploy-traefik
     - deploy-etcd
 
-- name: Generate Terraform Files 
+- name: Deploy vault single instance 
   hosts: vault_host
   vars:
     tcp_ports:
