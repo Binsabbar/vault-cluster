@@ -9,7 +9,7 @@ services:
       - 8200:8200
       - 8201:8201
     extra_hosts:
-      - "{{ etcd_hostname }}:192.168.100.2" # temp until LB is cloud is configured
+      - "{{ etcd_hostname }}:{{ etcd_lb_ip }}" # IP address of LB
     volumes:
       - ./server.hcl:/vault/config/server.hcl
       - ./certs/vault-ca-cert.pem:/certs/vault-ca-cert.pem
