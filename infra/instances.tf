@@ -9,8 +9,8 @@ locals {
   }
 
   shapes = {
-    small    = "VM.Standard.E2.1.Micro"
-    standard = "VM.Standard.E2.1"
+    small      = "VM.Standard.E2.1.Micro"
+    standard   = "VM.Standard.E2.1"
     standard12 = "VM.Standard2.1"
   }
 

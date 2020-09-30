@@ -5,18 +5,18 @@ locals {
       port          = 2379
       backends = [
         {
-          ip = module.instances.instances.etcd-1.private_ip
+          ip   = module.instances.instances.etcd-1.private_ip
           port = 2379
         },
         {
-          ip = module.instances.instances.etcd-2.private_ip
+          ip   = module.instances.instances.etcd-2.private_ip
           port = 2379
         },
         {
-          ip = module.instances.instances.etcd-3.private_ip
+          ip   = module.instances.instances.etcd-3.private_ip
           port = 2379
         }
-      ] 
+      ]
     }
   }
 }
