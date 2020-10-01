@@ -3,7 +3,13 @@
   apt:
     name: firewalld
     state: present
-    
+
+- name: Ensure service has started
+  become: yes
+  systemd:
+    name: firewalld
+    state: started
+        
 - name: "open required ports in the firewall - oracle cloud has predefined rules"
   command: "firewall-cmd  --permanent --zone=public --add-port={{ item }}/tcp"
   become: true
