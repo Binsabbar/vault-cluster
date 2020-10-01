@@ -6,3 +6,4 @@ data-2/
 terraform.tfstate
 terraform.tfstate.backup
 .envrc
+.auto.prod.tfvars
