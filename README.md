@@ -56,7 +56,7 @@ Follow [vault docs](https://www.vaultproject.io/docs) on how to operate vault.
 
 
 # Setup Vault in the Cloud with etcd cluster:
-TBW
+See Infra and Ansible dirs for more details
 
 Todos:
 
@@ -66,4 +66,4 @@ Todos:
 - [X] Create etcd cluster
 - [-] ~~Create vault cluster~~ [no longer vaild, will rely on backend cluster - etcd]
 - [X] Create policies for vault users
-- [ ] Deploy to Oracle Cloud in Private Subnet with LB
+- [X] Deploy to Oracle Cloud in Private Subnet with LB
