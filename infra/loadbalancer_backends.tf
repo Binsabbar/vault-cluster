@@ -19,4 +19,17 @@ locals {
       ]
     }
   }
+
+  public_lb_configurations = {
+    "vault-backend-set" = {
+      virtual_hosts = ["vault.private.vaultvnc.oraclevcn.com"]
+      port          = 8200
+      backends = [
+        {
+          ip   = module.instances.instances.vault.private_ip
+          port = 8200
+        }
+      ]
+    }
+  }
 }

@@ -61,10 +61,13 @@ module "private_loadbalancer" {
   tcp_configurations = local.private_lb_configurations
 }
 
-output "instances" {
-  value = module.instances.instances
-}
+module "public_loadbalancer" {
+  source = "./load-balancer"
 
-output "lb" {
-  value = module.private_loadbalancer.lb
+  compartment        = oci_identity_compartment.compartment
+  subnet_ids         = [module.network.network.public_subnet.id]
+  name               = "public load balancer"
+  is_private         = false
+  security_group_ids = [module.network_sg.nsg.public_subnet_nsg.id]
+  tcp_configurations = local.public_lb_configurations
 }
